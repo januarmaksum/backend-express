@@ -20,6 +20,9 @@ const userController = require('../controllers/UserController');
 //import validate register
 const { validateRegister, validateLogin } = require('../utils/validators/auth');
 
+//import validate user
+const { validateUser } = require('../utils/validators/user');
+
 //define route for register
 router.post('/register', validateRegister, registerController.register);
 
@@ -28,6 +31,9 @@ router.post('/login', validateLogin, loginController.login);
 
 //define route for user
 router.get('/admin/users', verifyToken, userController.findUsers);
+
+//define route for user create
+router.post('/admin/users', verifyToken, validateUser, userController.createUser);
 
 //export router
 module.exports = router
