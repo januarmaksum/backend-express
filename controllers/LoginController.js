@@ -1,7 +1,6 @@
-const express = require("express");
-const { generateToken } = require('../utils/lib');
-const bcrypt = require("bcryptjs");
 const prisma = require("../prisma/client");
+const bcrypt = require("bcryptjs");
+const { generateToken } = require('../utils/lib');
 const { validationResult } = require("express-validator");
 
 const login = async (req, res) => {

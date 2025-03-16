@@ -1,10 +1,6 @@
-//import express validator
 const { body } = require('express-validator');
-
-//import prisma
 const prisma = require('../../prisma/client');
 
-// Definisikan validasi untuk create user
 const validateUser = [
     body('name').notEmpty().withMessage('Name is required'),
     body('email')

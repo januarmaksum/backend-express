@@ -1,13 +1,11 @@
-const express = require("express");
+const prisma = require("../prisma/client");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const prisma = require("../prisma/client");
 
 const register = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        // Jika ada error, kembalikan error ke pengguna
         return res.status(422).json({
             success: false,
             message: "Validation error",

@@ -1,13 +1,5 @@
-//import express
-const express = require("express");
-
-//import prisma client
 const prisma = require("../prisma/client");
-
-// Import validationResult from express-validator
 const { validationResult } = require("express-validator");
-
-//import bcrypt
 const bcrypt = require("bcryptjs");
 
 //function findUsers
@@ -46,12 +38,9 @@ const findUsers = async (req, res) => {
 
 //function createUser
 const createUser = async (req, res) => {
-
-    // Periksa hasil validasi
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        // Jika ada error, kembalikan error ke pengguna
         return res.status(422).json({
             success: false,
             message: "Validation error",
@@ -127,12 +116,9 @@ const updateUser = async (req, res) => {
 
     //get ID from params
     const { id } = req.params;
-
-    // Periksa hasil validasi
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        // Jika ada error, kembalikan error ke pengguna
         return res.status(422).json({
             success: false,
             message: "Validation error",
