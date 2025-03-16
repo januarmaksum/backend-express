@@ -1,4 +1,5 @@
 const express = require('express')
+const logger = require('./utils/logger');
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -13,7 +14,6 @@ app.get('/', (req, res) => {
 })
 
 const router = require('./routes');
-const logger = require('./utils/logger');
 app.use('/api', router);
 
 const port = 3000;

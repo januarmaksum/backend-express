@@ -34,7 +34,7 @@ const login = async (req, res) => {
 
         //user not found
         if (!user) {
-            logger.info({ email: req.body.email }, MESSAGES.USER_NOT_FOUND);
+            logger.warn({ email: req.body.email }, MESSAGES.USER_NOT_FOUND);
             return res.status(404).json({
                 success: false,
                 message: MESSAGES.USER_NOT_FOUND,
