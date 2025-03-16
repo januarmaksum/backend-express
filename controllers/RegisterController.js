@@ -1,14 +1,17 @@
 const prisma = require("../prisma/client");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const { MESSAGES } = require("../utils/constants");
+const logger = require("../utils/logger");
 
 const register = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
+        logger.error({ endpoint: req.url }, MESSAGES.VALIDATION_ERROR);
         return res.status(422).json({
             success: false,
-            message: "Validation error",
+            message: MESSAGES.VALIDATION_ERROR,
             errors: errors.array(),
         });
     }
@@ -26,18 +29,24 @@ const register = async (req, res) => {
             },
         });
 
+        logger.info({
+            endpoint: req.url,
+            message: MESSAGES.SUCCESS_REGISTER,
+        });
+
         //return response json
         res.status(201).send({
             success: true,
-            message: "Register successfully",
+            message: MESSAGES.SUCCESS_REGISTER,
             data: user,
         });
     } catch (error) {
+        logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);
         res.status(500).send({
             success: false,
-            message: "Internal server error",
+            message: MESSAGES.ERROR_INTERNAL,
         });
     }
 };
 
-module.exports = {register};
+module.exports = { register };

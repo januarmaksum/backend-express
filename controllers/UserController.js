@@ -1,6 +1,8 @@
 const prisma = require("../prisma/client");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const logger = require("../utils/logger");
+const { MESSAGES } = require("../utils/constants");
 
 //function findUsers
 const findUsers = async (req, res) => {
@@ -21,17 +23,23 @@ const findUsers = async (req, res) => {
             },
         });
 
+        logger.info({
+            endpoint: req.url,
+            message: MESSAGES.SUCCESS_GET_USERS,
+        });
+
         //send response
         res.status(200).send({
             success: true,
-            message: "Get all users successfully",
+            message: MESSAGES.SUCCESS_GET_USERS,
             data: users,
         });
 
     } catch (error) {
+        logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);
         res.status(500).send({
             success: false,
-            message: "Internal server error",
+            message: MESSAGES.ERROR_INTERNAL,
         });
     }
 };
@@ -41,9 +49,10 @@ const createUser = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
+        logger.error({ endpoint: req.url }, MESSAGES.VALIDATION_ERROR);
         return res.status(422).json({
             success: false,
-            message: "Validation error",
+            message: MESSAGES.VALIDATION_ERROR,
             errors: errors.array(),
         });
     }
@@ -62,16 +71,22 @@ const createUser = async (req, res) => {
             },
         });
 
+        logger.info({
+            endpoint: req.url,
+            message: MESSAGES.SUCCESS_CREATE_USERS,
+        });
+
         res.status(201).send({
             success: true,
-            message: "User created successfully",
+            message: MESSAGES.SUCCESS_CREATE_USERS,
             data: user,
         });
 
     } catch (error) {
+        logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);
         res.status(500).send({
             success: false,
-            message: "Internal server error",
+            message: MESSAGES.ERROR_INTERNAL,
         });
     }
 };
@@ -96,6 +111,11 @@ const findUserById = async (req, res) => {
             },
         });
 
+        logger.info({
+            endpoint: req.url,
+            message: `Get user By ID :${id}`,
+        });
+
         //send response
         res.status(200).send({
             success: true,
@@ -104,9 +124,10 @@ const findUserById = async (req, res) => {
         });
 
     } catch (error) {
+        logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);
         res.status(500).send({
             success: false,
-            message: "Internal server error",
+            message: MESSAGES.ERROR_INTERNAL,
         });
     }
 };
@@ -119,9 +140,10 @@ const updateUser = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
+        logger.error({ endpoint: req.url }, MESSAGES.VALIDATION_ERROR);
         return res.status(422).json({
             success: false,
-            message: "Validation error",
+            message: MESSAGES.VALIDATION_ERROR,
             errors: errors.array(),
         });
     }
@@ -143,17 +165,23 @@ const updateUser = async (req, res) => {
             },
         });
 
+        logger.info({
+            endpoint: req.url,
+            message: MESSAGES.SUCCESS_UPDATE_USER,
+        });
+
         //send response
         res.status(200).send({
             success: true,
-            message: 'User updated successfully',
+            message: MESSAGES.SUCCESS_UPDATE_USER,
             data: user,
         });
 
     } catch (error) {
+        logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);
         res.status(500).send({
             success: false,
-            message: "Internal server error",
+            message: MESSAGES.ERROR_INTERNAL,
         });
     }
 };
@@ -173,16 +201,22 @@ const deleteUser = async (req, res) => {
             },
         });
 
+        logger.info({
+            endpoint: req.url,
+            message: MESSAGES.SUCCESS_DELETE_USER,
+        });
+
         //send response
         res.status(200).send({
             success: true,
-            message: 'User deleted successfully',
+            message: MESSAGES.SUCCESS_DELETE_USER,
         });
 
     } catch (error) {
+        logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);
         res.status(500).send({
             success: false,
-            message: "Internal server error",
+            message: MESSAGES.ERROR_INTERNAL,
         });
     }
 

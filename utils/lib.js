@@ -17,10 +17,7 @@ const generateToken = (user) => {
         expiresIn: `${expiresIn}s`,
     });
 
-    console.info("Token:", token);
-    console.info("-> Exp. Time:", formattedExpirationTime);
-
-    return token;
+    return { token, formattedExpirationTime };
 };
 
 module.exports = { generateToken, formatToWIB };
