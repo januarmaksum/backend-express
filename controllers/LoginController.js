@@ -1,25 +1,13 @@
-//import express
 const express = require("express");
-
-// Import validationResult from express-validator
+const { generateToken } = require('../utils/lib');
+const bcrypt = require("bcryptjs");
+const prisma = require("../prisma/client");
 const { validationResult } = require("express-validator");
 
-//import bcrypt
-const bcrypt = require("bcryptjs");
-
-//import jsonwebtoken
-const jwt = require("jsonwebtoken");
-
-//import prisma client
-const prisma = require("../prisma/client");
-
-//function login
 const login = async (req, res) => {
-    // Periksa hasil validasi
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        // Jika ada error, kembalikan error ke pengguna
         return res.status(422).json({
             success: false,
             message: "Validation error",
@@ -62,11 +50,6 @@ const login = async (req, res) => {
                 message: "Invalid password",
             });
 
-        //generate token JWT
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
-        });
-
         // Destructure to remove password from user object
         const { password, ...userWithoutPassword } = user;
 
@@ -76,7 +59,7 @@ const login = async (req, res) => {
             message: "Login successfully",
             data: {
                 user: userWithoutPassword,
-                token: token,
+                token: generateToken(user),
             },
         });
     } catch (error) {

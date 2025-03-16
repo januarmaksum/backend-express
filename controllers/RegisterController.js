@@ -1,19 +1,9 @@
-//import express
 const express = require("express");
-
-// Import validationResult from express-validator
 const { validationResult } = require("express-validator");
-
-//import bcrypt
 const bcrypt = require("bcryptjs");
-
-//import prisma client
 const prisma = require("../prisma/client");
 
-//function register
 const register = async (req, res) => {
-
-    // Periksa hasil validasi
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {

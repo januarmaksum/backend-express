@@ -20,6 +20,9 @@ const findUsers = async (req, res) => {
                 id: true,
                 name: true,
                 email: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true,
             },
             orderBy: {
                 id: "desc",
