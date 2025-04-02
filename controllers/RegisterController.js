@@ -21,7 +21,7 @@ const register = async (req, res) => {
 
     try {
         //insert data
-        const user = await prisma.user.create({
+        await prisma.user.create({
             data: {
                 name: req.body.name,
                 email: req.body.email,
@@ -38,7 +38,6 @@ const register = async (req, res) => {
         res.status(201).send({
             success: true,
             message: MESSAGES.SUCCESS_REGISTER,
-            data: user,
         });
     } catch (error) {
         logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);

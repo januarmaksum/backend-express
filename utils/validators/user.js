@@ -11,7 +11,7 @@ const validateUser = [
                 throw new Error('Email is required');
             }
             const user = await prisma.user.findUnique({ where: { email: value } });
-            if (user && user.id !== Number(req.params.id)) {
+            if (user && user.id !== req.params.id) {
                 throw new Error('Email already exists');
             }
             return true;
