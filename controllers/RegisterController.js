@@ -32,7 +32,7 @@ const register = async (req, res) => {
         logger.info({
             endpoint: req.url,
             message: MESSAGES.SUCCESS_REGISTER,
-        });
+        }, MESSAGES.SUCCESS_REGISTER);
 
         //return response json
         res.status(201).send({

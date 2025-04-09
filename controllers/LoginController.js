@@ -67,7 +67,7 @@ const login = async (req, res) => {
             token: token,
             expired_at: formattedExpirationTime,
             message: MESSAGES.SUCCESS_LOGIN,
-        });
+        }, MESSAGES.SUCCESS_LOGIN);
 
         //return response
         res.status(200).send({

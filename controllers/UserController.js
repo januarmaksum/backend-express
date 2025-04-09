@@ -26,7 +26,7 @@ const findUsers = async (req, res) => {
         logger.info({
             endpoint: req.url,
             message: MESSAGES.SUCCESS_GET_USERS,
-        });
+        }, MESSAGES.SUCCESS_GET_USERS);
 
         //send response
         res.status(200).send({
@@ -74,7 +74,7 @@ const createUser = async (req, res) => {
         logger.info({
             endpoint: req.url,
             message: MESSAGES.SUCCESS_CREATE_USERS,
-        });
+        }, MESSAGES.SUCCESS_CREATE_USERS);
 
         res.status(201).send({
             success: true,
@@ -113,7 +113,7 @@ const findUserById = async (req, res) => {
         logger.info({
             endpoint: req.url,
             message: `Get user By ID :${id}`,
-        });
+        }, `Get user By ID :${id}`);
 
         //send response
         res.status(200).send({
@@ -167,7 +167,7 @@ const updateUser = async (req, res) => {
         logger.info({
             endpoint: req.url,
             message: MESSAGES.SUCCESS_UPDATE_USER,
-        });
+        }, MESSAGES.SUCCESS_UPDATE_USER);
 
         //send response
         res.status(200).send({
@@ -203,7 +203,7 @@ const deleteUser = async (req, res) => {
         logger.info({
             endpoint: req.url,
             message: MESSAGES.SUCCESS_DELETE_USER,
-        });
+        }, MESSAGES.SUCCESS_DELETE_USER);
 
         //send response
         res.status(200).send({
