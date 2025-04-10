@@ -19,7 +19,7 @@ const findUsers = async (req, res) => {
                 updatedAt: true,
             },
             orderBy: {
-                id: "desc",
+                id: "asc",
             },
         });
 
@@ -101,7 +101,7 @@ const findUserById = async (req, res) => {
         //get user by ID
         const user = await prisma.user.findUnique({
             where: {
-                id: Number(id),
+                id: String(id),
             },
             select: {
                 id: true,
@@ -110,15 +110,27 @@ const findUserById = async (req, res) => {
             },
         });
 
+        // user not found
+        if (!user) {
+            logger.info({
+                endpoint: req.url,
+                message: MESSAGES.USER_NOT_FOUND,
+            }, MESSAGES.USER_NOT_FOUND);
+            return res.status(404).send({
+                success: false,
+                message: MESSAGES.USER_NOT_FOUND,
+            });
+        }
+
         logger.info({
             endpoint: req.url,
-            message: `Get user By ID :${id}`,
-        }, `Get user By ID :${id}`);
+            message: MESSAGES.SUCCESS_GET_USER_BY_ID,
+        }, MESSAGES.SUCCESS_GET_USER_BY_ID);
 
         //send response
         res.status(200).send({
             success: true,
-            message: `Get user By ID :${id}`,
+            message: MESSAGES.SUCCESS_GET_USER_BY_ID,
             data: user,
         });
 
@@ -147,22 +159,30 @@ const updateUser = async (req, res) => {
         });
     }
 
-    //hash password
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
     try {
 
         //update user
         const user = await prisma.user.update({
             where: {
-                id: Number(id),
+                id: String(id),
             },
             data: {
                 name: req.body.name,
                 email: req.body.email,
-                password: hashedPassword,
             },
         });
+
+        // user not found
+        if (!user) {
+            logger.info({
+                endpoint: req.url,
+                message: MESSAGES.USER_NOT_FOUND,
+            }, MESSAGES.USER_NOT_FOUND);
+            return res.status(404).send({
+                success: false,
+                message: MESSAGES.USER_NOT_FOUND,
+            });
+        }
 
         logger.info({
             endpoint: req.url,
@@ -173,7 +193,6 @@ const updateUser = async (req, res) => {
         res.status(200).send({
             success: true,
             message: MESSAGES.SUCCESS_UPDATE_USER,
-            data: user,
         });
 
     } catch (error) {
@@ -196,7 +215,7 @@ const deleteUser = async (req, res) => {
         //delete user
         await prisma.user.delete({
             where: {
-                id: Number(id),
+                id: String(id),
             },
         });
 

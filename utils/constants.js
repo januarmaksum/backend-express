@@ -22,6 +22,7 @@ const MESSAGES = {
     SUCCESS_CREATE_USERS: "User created successfully",
     SUCCESS_UPDATE_USER: "User updated successfully",
     SUCCESS_DELETE_USER: "User deleted successfully",
+    SUCCESS_GET_USER_BY_ID: "Get user By ID successfully",
 
     VALIDATION_ERROR: "Validation error",
 };
