@@ -231,10 +231,10 @@ const deleteUser = async (req, res) => {
         });
 
     } catch (error) {
-        logger.error({ error, endpoint: req.url }, MESSAGES.ERROR_INTERNAL);
-        res.status(500).send({
+        logger.error({ error, endpoint: req.url }, MESSAGES.USER_NOT_FOUND);
+        res.status(404).send({
             success: false,
-            message: MESSAGES.ERROR_INTERNAL,
+            message: MESSAGES.USER_NOT_FOUND,
         });
     }
 
